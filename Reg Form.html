@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registration Form - Step 2</title>
+  <link href="https://fonts.cdnfonts.com/css/gilroy-bold" rel="stylesheet"/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Unbounded:wght@800&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+  <style>
+    body {
+      font-family: 'Gilroy', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f4;
+    }
+
+    .registration-form {
+      width: 100%;
+      max-width: 390px; /* Adapted for iPhone 14 Pro */
+      background: white;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      height: 90vh; /* Takes up 90% of the screen height */
+      overflow-y: auto; /* Scroll if content doesn't fit */
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start; /* We stack items top -> bottom */
+      position: relative;
+    }
+
+    /* HEADER */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    .header .icon-button {
+      background-color: #e0e0e0;
+      width: 40px;
+      height: 40px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .header .icon-button i {
+      font-size: 24px; /* Larger icon size */
+      color: #333;
+    }
+
+    .header .title {
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      text-align: center;
+      line-height: 1.2;
+      background: linear-gradient(90deg, #511c6f, #9520ff, #ff4200);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientAnimation 5s infinite;
+    }
+    @keyframes gradientAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .header .title span {
+      display: block;
+    }
+
+    /* PROGRESS BAR */
+    .progress-bar {
+      width: 100%;
+      background-color: #e0e0e0;
+      border-radius: 5px;
+      overflow: hidden;
+      margin-bottom: 30px;
+    }
+    .progress-bar .progress {
+      height: 5px;
+      background-color: #9520ff;
+    }
+
+    /* BONUS OPTIONS WRAPPER */
+    .bonus-options {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      margin: 0;
+    }
+
+    /* BONUS OPTION (CASINO, SPORT, NO-BONUS, PROMO) */
+    .bonus-option {
+      background-color: #e0e0e0;
+      color: #999;
+      padding: 15px;
+      border-radius: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .icon-holder {
+      width: 40px;
+      display: flex;
+      align-items: flex-start;  /* For multiline text alignment */
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .icon-holder i {
+      font-size: 20px;
+      color: #333;
+      margin-top: 2px; /* Nudged for better multiline balance */
+    }
+    .bonus-option-text {
+      margin-left: 10px;
+      flex: 1;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      font-weight: bold;
+    }
+    .bonus-option.selected {
+      background: linear-gradient(90deg, #511c6f, #9520ff, #ff4200);
+      background-size: 200% 200%;
+      animation: gradientAnimation 5s infinite;
+      color: #fff;
+    }
+    .bonus-option.selected .icon-holder i {
+      color: #ff4200;
+    }
+
+    /* PROMO CONTAINER */
+    .promo-container {
+      overflow: hidden;
+      transition: height 0.3s ease;
+    }
+
+    /* PROMO CODE INPUT */
+    .promo-code-input {
+      display: none;
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #9520ff;
+      border-radius: 10px;
+      box-sizing: border-box;
+      font-size: 16px;
+      outline: none;
+      margin-top: 10px;
+    }
+
+    /* INPUT FIELDS */
+    .input-field {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      box-sizing: border-box;
+      font-size: 16px;
+      outline: none;
+      margin-bottom: 20px;
+      transition: border-color 0.3s ease;
+    }
+    .input-field:focus {
+      border-color: #9520ff;
+    }
+
+    /* PASSWORD FIELD + EYE ICON */
+    .password-field {
+      position: relative;
+    }
+    .password-field input {
+      width: 100%;
+    }
+    .password-field .toggle-password {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 20px;
+      cursor: pointer;
+      color: #9520ff;
+    }
+    .password-field .toggle-password.active {
+      color: #ff4200; /* Orange when active */
+    }
+
+    /* CHECKBOXES */
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .checkbox-container input {
+      width: 32px; /* Enlarged checkbox by 60% */
+      height: 32px;
+      margin-right: 10px;
+      accent-color: #9520ff; /* Purple color when checked */
+      cursor: pointer;
+    }
+    .checkbox-container label {
+      font-size: 14px;
+      color: #511c6f;
+      cursor: pointer;
+    }
+/* Градиент Бонуса на этапе 2 */
+#selectedBonusStage2 {
+    background: linear-gradient(90deg, #511c6f, #9520ff, #ff4200);
+      background-size: 200% 200%;
+      animation: gradientAnimation 5s infinite;
+      color: #fff;
+    }
+
+    /* ИКОНКА ВЫБРАННОГО БОНУСА НА ЭТАПЕ 2 */
+#selectedBonusStage2.selected .icon-holder i {
+  color: #ff4200 !important;
+}
+
+    /* CONTINUE BUTTON */
+    .continue-button {
+      width: 100%;
+      background-color: #9520ff;
+      color: white;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Gilroy', sans-serif;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 20px;
+    }
+    .continue-button:hover {
+      background-color: #ff4200;
+    }
+    .continue-button:disabled {
+      background-color: #e0e0e0;
+      cursor: not-allowed;
+    }
+
+    /* LOGIN PROMPT */
+    .login-prompt {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+      color: #511c6f;
+    }
+    .login-prompt a {
+      color: #9520ff;
+      text-decoration: underline;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    .login-prompt a:hover {
+      color: #ff4200;
+    }
+
+    /* HIDDEN STAGE */
+    .stage {
+      display: none;
+    }
+    .stage.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+<div class="registration-form">
+  <!-- STAGE 1: CHOOSE BONUS -->
+  <div class="stage stage-1 active">
+    <!-- HEADER -->
+    <div class="header">
+      <div class="icon-button back-arrow">
+        <i class="fas fa-arrow-left"></i>
+      </div>
+      <div class="title">
+        <span>CHOOSE YOUR</span>
+        <span>WELCOME BONUS</span>
+      </div>
+      <div class="icon-button close-btn">
+        <i class="fas fa-times"></i>
+      </div>
+    </div>
+
+    <!-- PROGRESS BAR -->
+    <div class="progress-bar">
+      <div class="progress" style="width: 33.33%;"></div>
+    </div>
+
+    <!-- BONUS OPTIONS -->
+    <div class="bonus-options">
+      <!-- CASINO BONUS -->
+      <div class="bonus-option" data-bonus="casino">
+        <div class="icon-holder">
+          <i class="fas fa-gamepad"></i>
+        </div>
+        <div class="bonus-option-text">
+          <div>Casino Bonus</div>
+          <div>100% up to $1000 + 225 Freespins</div>
+        </div>
+      </div>
+
+      <!-- SPORT BONUS -->
+      <div class="bonus-option" data-bonus="sport">
+        <div class="icon-holder">
+          <i class="fas fa-basketball-ball"></i>
+        </div>
+        <div class="bonus-option-text">
+          <div>Sport Bonus</div>
+          <div>100% up to $350 Freebet Bonus</div>
+        </div>
+      </div>
+
+      <!-- PROMO CONTAINER (animated height) -->
+      <div class="promo-container" id="promoContainer">
+        <!-- "I have a Promo Code" bonus option -->
+        <div class="bonus-option" data-bonus="promo">
+          <div class="icon-holder">
+            <i class="fas fa-file-alt"></i>
+          </div>
+          <div class="bonus-option-text">
+            I have a Promo Code
+          </div>
+        </div>
+        <!-- The hidden input inside the same container -->
+        <input
+          type="text"
+          class="promo-code-input"
+          placeholder="Enter your promo code"
+        />
+      </div>
+
+      <!-- NO BONUS -->
+      <div class="bonus-option" data-bonus="no-bonus">
+        <div class="icon-holder">
+          <i class="fas fa-times"></i>
+        </div>
+        <div class="bonus-option-text">
+          Continue without Bonus
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTINUE BUTTON -->
+    <button class="continue-button" disabled>CONTINUE</button>
+
+    <!-- LOGIN PROMPT -->
+    <div class="login-prompt">
+      Already have an account? <a>Log in</a>
+    </div>
+  </div>
+
+  <!-- STAGE 2: ENTER DETAILS -->
+  <div class="stage stage-2">
+    <!-- HEADER -->
+    <div class="header">
+      <div class="icon-button back-arrow" id="backToStage1">
+        <i class="fas fa-arrow-left"></i>
+      </div>
+      <!-- Новый текст с градиентом: "You are almost there" -->
+      <div class="title">
+        <span>YOU ARE</span>
+        <span>ALMOST THERE</span>
+      </div>
+      <div class="icon-button close-btn">
+        <i class="fas fa-times"></i>
+      </div>
+    </div>
+
+    <!-- PROGRESS BAR -->
+    <div class="progress-bar">
+      <div class="progress" style="width: 66.66%;"></div>
+    </div>
+
+    <!-- Здесь отображаем выбранный бонус в том же стиле, что и на предыдущей странице -->
+    <div class="bonus-option" id="selectedBonusStage2" style="margin-bottom: 20px;">
+      <div class="icon-holder" id="selectedBonusIconHolder">
+        <!-- Иконку будем подставлять динамически -->
+        <i class="fas fa-question"></i>
+      </div>
+      <div class="bonus-option-text">
+        <div id="bonusLine1Stage2"></div>
+        <div id="bonusLine2Stage2"></div>
+      </div>
+    </div>
+    
+
+    <!-- EMAIL INPUT -->
+    <input type="email" class="input-field" placeholder="Enter e-mail" />
+
+    <!-- PASSWORD INPUT -->
+    <div class="password-field">
+      <input
+        type="password"
+        class="input-field"
+        placeholder="Enter Password"
+        id="passwordInput"
+      />
+      <!-- Новая иконка глаза (regular) -->
+      <i class="fa-regular fa-eye-slash toggle-password" id="togglePassword"></i>
+    </div>
+
+    <!-- CHECKBOXES -->
+    <div class="checkbox-container">
+      <input type="checkbox" id="ageCheckbox" />
+      <label for="ageCheckbox">
+        I confirm that I am 19 or older and have read privacy policy and terms and conditions
+      </label>
+    </div>
+    <div class="checkbox-container">
+      <input type="checkbox" id="privacyCheckbox" />
+      <label for="privacyCheckbox">
+        I accept Privacy Notice and agree to receive bonuses, promotions and news
+      </label>
+    </div>
+
+
+
+    <!-- CONTINUE BUTTON -->
+    <button class="continue-button" disabled>CONTINUE</button>
+
+    <!-- LOGIN PROMPT -->
+    <div class="login-prompt">
+      Already have an account? <a>Log in</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---------- STAGE 1 LOGIC ----------
+  const bonusOptions = document.querySelectorAll('.bonus-option');
+  const continueButtonStage1 = document.querySelector('.stage-1 .continue-button');
+  const promoContainer = document.getElementById('promoContainer');
+  const promoOption = promoContainer.querySelector('.bonus-option[data-bonus="promo"]');
+  const promoInput = promoContainer.querySelector('.promo-code-input');
+  const stage1 = document.querySelector('.stage-1');
+  const stage2 = document.querySelector('.stage-2');
+
+  let collapsedHeight = 0;
+  let expandedHeight = 0;
+  let selectedBonus = null;
+  let promoCode = '';
+
+  // Скрываем промокод по умолчанию
+  promoInput.style.display = 'none';
+
+  // После загрузки страницы измеряем высоты для анимации
+  window.addEventListener('load', () => {
+    // Выключаем анимацию, чтобы точно измерить
+    promoContainer.style.transition = 'none';
+    collapsedHeight = promoContainer.scrollHeight; // высота без поля ввода
+
+    promoInput.style.display = 'block';
+    expandedHeight = promoContainer.scrollHeight;   // высота с полем ввода
+
+    // Возвращаем всё обратно
+    promoInput.style.display = 'none';
+    promoContainer.style.height = collapsedHeight + 'px';
+
+    // Включаем анимацию снова
+    setTimeout(() => {
+      promoContainer.style.transition = 'height 0.3s ease';
+    }, 0);
+  });
+
+  // Выбор бонуса
+  bonusOptions.forEach(option => {
+    option.addEventListener('click', () => {
+      // Снимаем выделение со всех
+      bonusOptions.forEach(opt => opt.classList.remove('selected'));
+      // Выделяем текущую
+      option.classList.add('selected');
+      continueButtonStage1.disabled = false;
+
+      selectedBonus = option.getAttribute('data-bonus');
+
+      // Если "promo" - показываем поле, иначе скрываем
+      if (selectedBonus === 'promo') {
+        promoInput.style.display = 'block';
+        promoContainer.style.height = expandedHeight + 'px';
+      } else {
+        promoInput.style.display = 'none';
+        promoContainer.style.height = collapsedHeight + 'px';
+      }
+    });
+  });
+
+  // Переход к Stage 2
+  continueButtonStage1.addEventListener('click', () => {
+    stage1.classList.remove('active');
+    stage2.classList.add('active');
+
+    // ДОБАВЬТЕ ЭТУ СТРОЧКУ ↓
+  document.getElementById('selectedBonusStage2').classList.add('selected');
+
+    // Находим на Stage 2 элементы для заполнения
+    const bonusLine1Stage2 = document.getElementById('bonusLine1Stage2');
+    const bonusLine2Stage2 = document.getElementById('bonusLine2Stage2');
+    const selectedBonusIconHolder = document.getElementById('selectedBonusIconHolder');
+
+    // Смотрим, какая опция была выбрана
+    const selectedOption = document.querySelector('.stage-1 .bonus-option.selected');
+    if (selectedOption) {
+      if (selectedBonus === 'promo') {
+        promoCode = promoInput.value;
+        // Текстовые строки для промокода
+        bonusLine1Stage2.textContent = 'PROMO CODE:';
+        bonusLine2Stage2.textContent = promoCode ? promoCode : '(none entered)';
+        // Ставим иконку промо
+        selectedBonusIconHolder.innerHTML = '<i class="fas fa-file-alt"></i>';
+      } else if (selectedBonus === 'no-bonus') {
+        bonusLine1Stage2.textContent = 'NO BONUS';
+        bonusLine2Stage2.textContent = '';
+        // Иконка без бонуса
+        selectedBonusIconHolder.innerHTML = '<i class="fas fa-times"></i>';
+      } else {
+        // Считываем две строки из выбранной опции
+        const lines = selectedOption.querySelectorAll('.bonus-option-text > div');
+        if (lines.length >= 2) {
+          bonusLine1Stage2.textContent = lines[0].textContent.trim();
+          bonusLine2Stage2.textContent = lines[1].textContent.trim();
+        } else {
+          // Если строка одна
+          bonusLine1Stage2.textContent =
+            selectedOption.querySelector('.bonus-option-text').textContent.trim();
+          bonusLine2Stage2.textContent = '';
+        }
+        // Берём иконку из предыдущего этапа
+        const oldIcon = selectedOption.querySelector('.icon-holder i').cloneNode(true);
+        selectedBonusIconHolder.innerHTML = '';
+        selectedBonusIconHolder.appendChild(oldIcon);
+      }
+    }
+  });
+
+  // Вернуться на Stage 1
+  const backToStage1Button = document.getElementById('backToStage1');
+  backToStage1Button.addEventListener('click', () => {
+    stage2.classList.remove('active');
+    stage1.classList.add('active');
+  });
+
+  // ---------- STAGE 2 LOGIC ----------
+  const passwordInput = document.getElementById('passwordInput');
+  const togglePassword = document.getElementById('togglePassword');
+  const continueButtonStage2 = document.querySelector('.stage-2 .continue-button');
+  const ageCheckbox = document.getElementById('ageCheckbox');
+  const privacyCheckbox = document.getElementById('privacyCheckbox');
+
+  // Переключение вида пароля (глаз)
+  togglePassword.addEventListener('click', () => {
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+      togglePassword.classList.replace('fa-eye-slash', 'fa-eye');
+      togglePassword.classList.add('active');
+    } else {
+      passwordInput.type = 'password';
+      togglePassword.classList.replace('fa-eye', 'fa-eye-slash');
+      togglePassword.classList.remove('active');
+    }
+  });
+
+  // Активируем/деактивируем кнопку Continue в Stage 2
+  function checkStage2Conditions() {
+    if (ageCheckbox.checked && privacyCheckbox.checked) {
+      continueButtonStage2.disabled = false;
+    } else {
+      continueButtonStage2.disabled = true;
+    }
+  }
+  ageCheckbox.addEventListener('change', checkStage2Conditions);
+  privacyCheckbox.addEventListener('change', checkStage2Conditions);
+</script>
+</body>
+</html>
