@@ -14,18 +14,14 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
   />
   <style>
-    /* Сбрасываем отступы, чтобы 100vh работал более предсказуемо */
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-    }
-
     body {
       font-family: 'Gilroy', sans-serif;
+      margin: 0;
+      padding: 0;
       display: flex;
       justify-content: center;
       align-items: center;
+      height: 100vh;
       background-color: #f4f4f4;
     }
 
@@ -36,20 +32,14 @@
       padding: 20px;
       border-radius: 20px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
-      /* 1) Делаем 100vh, чтобы форма всегда занимала весь экран.
-            + включаем плавный скролл на iOS. */
-      height: 100vh;
+      height: 90vh;
       overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       position: relative;
     }
 
-    /* HEADER */
     .header {
       display: flex;
       justify-content: space-between;
@@ -70,7 +60,6 @@
       font-size: 24px;
       color: #333;
     }
-
     .header .title {
       font-family: 'Unbounded', sans-serif;
       font-weight: 800;
@@ -93,7 +82,6 @@
       display: block;
     }
 
-    /* PROGRESS BAR */
     .progress-bar {
       width: 100%;
       background-color: #e0e0e0;
@@ -106,7 +94,6 @@
       background-color: #9520ff;
     }
 
-    /* BONUS OPTIONS WRAPPER */
     .bonus-options {
       display: flex;
       flex-direction: column;
@@ -114,7 +101,6 @@
       margin: 0;
     }
 
-    /* BONUS OPTION (CASINO, SPORT, NO-BONUS, PROMO) */
     .bonus-option {
       background-color: #e0e0e0;
       color: #999;
@@ -155,13 +141,10 @@
       color: #ff4200;
     }
 
-    /* PROMO CONTAINER */
     .promo-container {
       overflow: hidden;
       transition: height 0.3s ease;
     }
-
-    /* PROMO CODE INPUT */
     .promo-code-input {
       display: none;
       width: 100%;
@@ -174,7 +157,6 @@
       margin-top: 10px;
     }
 
-    /* INPUT FIELDS */
     .input-field {
       width: 100%;
       padding: 15px;
@@ -190,22 +172,6 @@
       border-color: #9520ff;
     }
 
-    /* Отключаем нативное iOS/бразуерное оформление для select и date */
-    select,
-    input[type="date"] {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      /* Чтобы выглядело, как у текстового поля */
-      padding: 15px;
-      border: 2px solid #e0e0e0;
-      border-radius: 10px;
-      font-size: 16px;
-      background-color: #fff;
-      box-sizing: border-box;
-    }
-
-    /* PASSWORD FIELD + EYE ICON */
     .password-field {
       position: relative;
     }
@@ -225,7 +191,6 @@
       color: #ff4200;
     }
 
-    /* CHECKBOXES */
     .checkbox-container {
       display: flex;
       align-items: center;
@@ -244,7 +209,6 @@
       cursor: pointer;
     }
 
-    /* Градиент Бонуса на этапе 2 */
     #selectedBonusStage2 {
       background: linear-gradient(90deg, #511c6f, #9520ff, #ff4200);
       background-size: 200% 200%;
@@ -255,7 +219,6 @@
       color: #ff4200 !important;
     }
 
-    /* Аналогичный стиль для STAGE 3 */
     #selectedBonusStage3 {
       background: linear-gradient(90deg, #511c6f, #9520ff, #ff4200);
       background-size: 200% 200%;
@@ -266,7 +229,6 @@
       color: #ff4200 !important;
     }
 
-    /* CONTINUE BUTTON */
     .continue-button {
       width: 100%;
       background-color: #9520ff;
@@ -289,7 +251,6 @@
       cursor: not-allowed;
     }
 
-    /* LOGIN PROMPT */
     .login-prompt {
       text-align: center;
       margin-top: 15px;
@@ -306,22 +267,11 @@
       color: #ff4200;
     }
 
-    /* HIDDEN STAGE */
     .stage {
       display: none;
     }
     .stage.active {
       display: block;
-    }
-
-    /* =========================== */
-    /*      СТИЛИ ДЛЯ STAGE 3     */
-    /* =========================== */
-
-    /* 2) Добавим нижний отступ, чтобы кнопка не "пряталась".
-       Так, при прокрутке одним движением можно доехать до кнопки. */
-    .stage-3 {
-      padding-bottom: 80px; /* достаточный отступ для видимости кнопки */
     }
 
     .section-title {
@@ -345,7 +295,7 @@
     }
     .gender-option {
       flex: 1;
-      padding: 15px;
+      padding: 10px;
       border: 2px solid #e0e0e0;
       border-radius: 10px;
       text-align: center;
@@ -360,36 +310,42 @@
 
     .country-select {
       position: relative;
-      margin-bottom: 20px;
+      margin-bottom: 5px;
     }
-    .country-select .flag-icon {
-      position: absolute;
-      right: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 24px;
-      height: 24px;
-      background-size: cover;
-    }
-
+    
     .phone-input {
       display: flex;
       gap: 5px;
-      margin-bottom: 20px;
+      margin-bottom: 5px;
     }
     .prefix-block {
-      flex: 1; /* треть */
+      flex: 1;
     }
     .tel-block {
-      flex: 2; /* две трети */
+      flex: 2;
+    }
+
+    .stage-3 .input-field {
+      padding: 10px;
+      -webkit-appearance: none;
+      appearance: none;
+      background-color: #fff;
+      color: #333;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      box-sizing: border-box;
+      font-size: 16px;
+      outline: none;
+      margin-bottom: 15px;
+    }
+    .stage-3 .input-field:focus {
+      border-color: #9520ff;
     }
   </style>
 </head>
 <body>
 <div class="registration-form">
-  <!-- STAGE 1: CHOOSE BONUS -->
   <div class="stage stage-1 active">
-    <!-- HEADER -->
     <div class="header">
       <div class="icon-button back-arrow">
         <i class="fas fa-arrow-left"></i>
@@ -403,14 +359,11 @@
       </div>
     </div>
 
-    <!-- PROGRESS BAR -->
     <div class="progress-bar">
       <div class="progress" style="width: 33.33%;"></div>
     </div>
 
-    <!-- BONUS OPTIONS -->
     <div class="bonus-options">
-      <!-- CASINO BONUS -->
       <div class="bonus-option" data-bonus="casino">
         <div class="icon-holder">
           <i class="fas fa-gamepad"></i>
@@ -421,7 +374,6 @@
         </div>
       </div>
 
-      <!-- SPORT BONUS -->
       <div class="bonus-option" data-bonus="sport">
         <div class="icon-holder">
           <i class="fas fa-basketball-ball"></i>
@@ -432,9 +384,7 @@
         </div>
       </div>
 
-      <!-- PROMO CONTAINER (animated height) -->
       <div class="promo-container" id="promoContainer">
-        <!-- "I have a Promo Code" bonus option -->
         <div class="bonus-option" data-bonus="promo">
           <div class="icon-holder">
             <i class="fas fa-file-alt"></i>
@@ -443,7 +393,6 @@
             I have a Promo Code
           </div>
         </div>
-        <!-- The hidden input inside the same container -->
         <input
           type="text"
           class="promo-code-input"
@@ -451,7 +400,6 @@
         />
       </div>
 
-      <!-- NO BONUS -->
       <div class="bonus-option" data-bonus="no-bonus">
         <div class="icon-holder">
           <i class="fas fa-times"></i>
@@ -462,18 +410,13 @@
       </div>
     </div>
 
-    <!-- CONTINUE BUTTON -->
     <button class="continue-button" disabled>CONTINUE</button>
-
-    <!-- LOGIN PROMPT -->
     <div class="login-prompt">
       Already have an account? <a>Log in</a>
     </div>
   </div>
 
-  <!-- STAGE 2: ENTER DETAILS -->
   <div class="stage stage-2">
-    <!-- HEADER -->
     <div class="header">
       <div class="icon-button back-arrow" id="backToStage1">
         <i class="fas fa-arrow-left"></i>
@@ -487,12 +430,10 @@
       </div>
     </div>
 
-    <!-- PROGRESS BAR -->
     <div class="progress-bar">
       <div class="progress" style="width: 66.66%;"></div>
     </div>
 
-    <!-- Отображаем выбранный бонус (как на Step 1) -->
     <div class="bonus-option" id="selectedBonusStage2" style="margin-bottom: 20px;">
       <div class="icon-holder" id="selectedBonusIconHolder">
         <i class="fas fa-question"></i>
@@ -503,10 +444,8 @@
       </div>
     </div>
 
-    <!-- EMAIL INPUT -->
     <input type="email" class="input-field" placeholder="Enter e-mail" />
 
-    <!-- PASSWORD INPUT -->
     <div class="password-field">
       <input
         type="password"
@@ -517,7 +456,6 @@
       <i class="fa-regular fa-eye-slash toggle-password" id="togglePassword"></i>
     </div>
 
-    <!-- CHECKBOXES -->
     <div class="checkbox-container">
       <input type="checkbox" id="ageCheckbox" />
       <label for="ageCheckbox">
@@ -531,19 +469,13 @@
       </label>
     </div>
 
-    <!-- CONTINUE BUTTON -->
     <button class="continue-button" disabled>CONTINUE</button>
-
-    <!-- LOGIN PROMPT -->
     <div class="login-prompt">
       Already have an account? <a>Log in</a>
     </div>
   </div>
 
-  <!-- STAGE 3: FINAL DETAILS -->
-  <!-- Обратите внимание: .stage-3 имеет доп. нижний отступ (padding-bottom:80px) -->
   <div class="stage stage-3">
-    <!-- HEADER -->
     <div class="header">
       <div class="icon-button back-arrow" id="backToStage2">
         <i class="fas fa-arrow-left"></i>
@@ -557,12 +489,10 @@
       </div>
     </div>
 
-    <!-- PROGRESS BAR -->
     <div class="progress-bar">
       <div class="progress" style="width: 90%;"></div>
     </div>
 
-    <!-- SELECTED BONUS -->
     <div class="bonus-option" id="selectedBonusStage3" style="margin-bottom: 20px;">
       <div class="icon-holder">
         <i class="fas fa-question"></i>
@@ -573,7 +503,6 @@
       </div>
     </div>
 
-    <!-- PERSONAL DATA SECTION -->
     <div class="section-title">
       <div class="line"></div>
       <span>Personal Data</span>
@@ -584,13 +513,11 @@
     <input type="text" class="input-field" placeholder="Enter Last Name">
     <input type="date" class="input-field" placeholder="Date of Birth">
 
-    <!-- GENDER SELECTION -->
     <div class="gender-selection">
       <div class="gender-option selected" data-gender="male">Male</div>
       <div class="gender-option" data-gender="female">Female</div>
     </div>
 
-    <!-- LOCATION SECTION -->
     <div class="section-title">
       <div class="line"></div>
       <span>Location</span>
@@ -621,7 +548,6 @@
       </div>
     </div>
 
-    <!-- ADDRESS SECTION -->
     <div class="section-title">
       <div class="line"></div>
       <span>Address</span>
@@ -636,9 +562,7 @@
   </div>
 </div>
 
-
 <script>
-  // ---------------- STAGE 1 LOGIC ----------------
   const bonusOptions = document.querySelectorAll('.bonus-option');
   const continueButtonStage1 = document.querySelector('.stage-1 .continue-button');
   const promoContainer = document.getElementById('promoContainer');
@@ -651,36 +575,26 @@
   let selectedBonus = null;
   let promoCode = '';
 
-  // Скрываем промокод по умолчанию
   promoInput.style.display = 'none';
 
-  // После загрузки страницы измеряем высоты для анимации
   window.addEventListener('load', () => {
     promoContainer.style.transition = 'none';
-    collapsedHeight = promoContainer.scrollHeight; // высота без поля
-
+    collapsedHeight = promoContainer.scrollHeight;
     promoInput.style.display = 'block';
-    expandedHeight = promoContainer.scrollHeight;   // высота с полем
-
-    // Возвращаем
+    expandedHeight = promoContainer.scrollHeight;
     promoInput.style.display = 'none';
     promoContainer.style.height = collapsedHeight + 'px';
-
     setTimeout(() => {
       promoContainer.style.transition = 'height 0.3s ease';
     }, 0);
   });
 
-  // Выбор бонуса
   bonusOptions.forEach(option => {
     option.addEventListener('click', () => {
       bonusOptions.forEach(opt => opt.classList.remove('selected'));
       option.classList.add('selected');
       continueButtonStage1.disabled = false;
-
       selectedBonus = option.getAttribute('data-bonus');
-
-      // Если "promo" - показываем поле, иначе скрываем
       if (selectedBonus === 'promo') {
         promoInput.style.display = 'block';
         promoContainer.style.height = expandedHeight + 'px';
@@ -691,19 +605,13 @@
     });
   });
 
-  // Переход к Stage 2
   continueButtonStage1.addEventListener('click', () => {
     stage1.classList.remove('active');
     stage2.classList.add('active');
-
-    // Помечаем блок на втором этапе градиентом
     document.getElementById('selectedBonusStage2').classList.add('selected');
-
-    // Находим на Stage 2 элементы для заполнения
     const bonusLine1Stage2 = document.getElementById('bonusLine1Stage2');
     const bonusLine2Stage2 = document.getElementById('bonusLine2Stage2');
     const selectedBonusIconHolder = document.getElementById('selectedBonusIconHolder');
-
     const selectedOption = document.querySelector('.stage-1 .bonus-option.selected');
     if (selectedOption) {
       if (selectedBonus === 'promo') {
@@ -716,7 +624,6 @@
         bonusLine2Stage2.textContent = '';
         selectedBonusIconHolder.innerHTML = '<i class="fas fa-times"></i>';
       } else {
-        // Считываем две строки
         const lines = selectedOption.querySelectorAll('.bonus-option-text > div');
         if (lines.length >= 2) {
           bonusLine1Stage2.textContent = lines[0].textContent.trim();
@@ -726,7 +633,6 @@
             selectedOption.querySelector('.bonus-option-text').textContent.trim();
           bonusLine2Stage2.textContent = '';
         }
-        // Клонируем иконку
         const oldIcon = selectedOption.querySelector('.icon-holder i').cloneNode(true);
         selectedBonusIconHolder.innerHTML = '';
         selectedBonusIconHolder.appendChild(oldIcon);
@@ -734,21 +640,18 @@
     }
   });
 
-  // Вернуться на Stage 1
   const backToStage1Button = document.getElementById('backToStage1');
   backToStage1Button.addEventListener('click', () => {
     stage2.classList.remove('active');
     stage1.classList.add('active');
   });
 
-  // ---------------- STAGE 2 LOGIC ----------------
   const passwordInput = document.getElementById('passwordInput');
   const togglePassword = document.getElementById('togglePassword');
   const continueButtonStage2 = document.querySelector('.stage-2 .continue-button');
   const ageCheckbox = document.getElementById('ageCheckbox');
   const privacyCheckbox = document.getElementById('privacyCheckbox');
 
-  // Переключение вида пароля (глаз)
   togglePassword.addEventListener('click', () => {
     if (passwordInput.type === 'password') {
       passwordInput.type = 'text';
@@ -761,7 +664,6 @@
     }
   });
 
-  // Активация кнопки Continue (Stage 2)
   function checkStage2Conditions() {
     if (ageCheckbox.checked && privacyCheckbox.checked) {
       continueButtonStage2.disabled = false;
@@ -772,42 +674,31 @@
   ageCheckbox.addEventListener('change', checkStage2Conditions);
   privacyCheckbox.addEventListener('change', checkStage2Conditions);
 
-  // ---------------- STAGE 3 LOGIC ----------------
   const stage3 = document.querySelector('.stage-3');
   const backToStage2Button = document.getElementById('backToStage2');
 
-  // При клике "CONTINUE" (Stage 2) -> Stage 3
   continueButtonStage2.addEventListener('click', () => {
     stage2.classList.remove('active');
     stage3.classList.add('active');
-
-    // Делаем градиент сразу
     document.getElementById('selectedBonusStage3').classList.add('selected');
-
-    // Копируем тексты о бонусе
     document.getElementById('bonusLine1Stage3').textContent =
       document.getElementById('bonusLine1Stage2').textContent;
     document.getElementById('bonusLine2Stage3').textContent =
       document.getElementById('bonusLine2Stage2').textContent;
-
-    // При желании копируем и иконку
     const stage2Icon = document
       .getElementById('selectedBonusIconHolder')
       .querySelector('i')
       .cloneNode(true);
-
     const stage3IconHolder = document.querySelector('#selectedBonusStage3 .icon-holder');
     stage3IconHolder.innerHTML = '';
     stage3IconHolder.appendChild(stage2Icon);
   });
 
-  // Кнопка "Назад" со Stage 3 на Stage 2
   backToStage2Button.addEventListener('click', () => {
     stage3.classList.remove('active');
     stage2.classList.add('active');
   });
 
-  // Логика выбора пола
   const genderOptions = document.querySelectorAll('.gender-option');
   genderOptions.forEach(option => {
     option.addEventListener('click', () => {
@@ -816,7 +707,6 @@
     });
   });
 
-  // Логика для флагов
   document.querySelector('.country-select select').addEventListener('change', function() {
     const flagMap = {
       canada: 'url("flags/ca.svg")',
